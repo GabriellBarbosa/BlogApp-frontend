@@ -1,11 +1,15 @@
 import React from 'react'
+import GlobalStyle from '@styles/global'
+import theme from '@styles/theme'
+import { ThemeProvider } from 'styled-components'
 import { AppRoutes } from './routes'
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   return (
-    <div className="app">
+    <ThemeProvider theme={theme}>
       <AppRoutes />
-    </div>
+      <GlobalStyle />
+    </ThemeProvider>
   )
 }
 
