@@ -23,8 +23,9 @@ export const ContentWrapper = styled.div`
 export const UserName = styled.span``
 
 export const Main = styled.main`
-  background-color: #0d1117;
-  border: 1px solid #30363d;
+  background-color: ${({ theme }) => theme.colors.contentBg};
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.colors.borderColor};
   border-radius: 8px;
   padding: 10px;
   margin-top: 10px;
