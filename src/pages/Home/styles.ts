@@ -5,7 +5,17 @@ export const Container = styled.div`
   padding: 0 20px;
   margin: 0 auto;
 `
+export const AddPostWrapper = styled.div`
+  max-width: 300px;
+  margin: 0 auto;
+`
+
 export const Posts = styled.ul``
+
+export const RecentText = styled.p`
+  margin: 20px 0;
+  color: ${({ theme }) => theme.colors.lightText};
+`
 
 export const Post = styled.li`
   margin-bottom: 20px;
@@ -32,12 +42,12 @@ export const Main = styled.main`
 
 export const Content = styled.p`
   font-size: 16px;
-  color: ${props => props.theme.colors.lightText};
+  color: ${({ theme }) => theme.colors.lightText};
   margin-bottom: 10px;
 `
 
 export const Category = styled.p`
-  color: ${props => props.theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 12px;
   text-decoration: underline;
   text-transform: lowercase;

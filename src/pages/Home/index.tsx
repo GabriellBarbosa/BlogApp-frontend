@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Container } from './styles'
+import { Container, AddPostWrapper, RecentText } from './styles'
 import { api } from '@services/api'
-import { PostProps } from 'src/interfaces/post'
-import { Posts } from '@components/posts'
-import { NoResults } from '@components/noResults'
+import { PostProps } from '@interfaces/post'
+import { Posts } from '@components/ListPosts'
+import { NoResults } from '@components/NoResults'
+import { AddPost } from '@components/AddPost'
 
 export const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostProps[]>([])
@@ -11,8 +12,8 @@ export const Home: React.FC = () => {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const response = await api.get('posts')
-        setPosts(response.data)
+        const { data } = await api.get('posts')
+        setPosts(data)
       } catch (error) {
         console.log(error)
       }
@@ -22,8 +23,12 @@ export const Home: React.FC = () => {
 
   return (
     <Container>
+      <AddPostWrapper>
+        <AddPost />
+      </AddPostWrapper>
       {posts.length ? (
         <>
+          <RecentText>Postagens recentes</RecentText>
           <Posts posts={posts} />
           <NoResults message={'Não há mais postagens'} />
         </>
