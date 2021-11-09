@@ -22,8 +22,8 @@ export const NoResults: React.FC<Props> = ({ message }) => {
       <Message>{message}</Message>
       <Lottie
         options={defaultOptions}
-        height={400}
-        width={400}
+        height={300}
+        width={300}
         isStopped={false}
         isPaused={false}
       />
