@@ -1,17 +1,17 @@
 import React, { InputHTMLAttributes, useEffect, useRef } from 'react'
+import { Container, Label, InputStyled, HelperText } from './styles'
 import { useField } from '@unform/core'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label: string
 }
 
-export const Input: React.FC<Props> = ({ label, name, ...rest }) => {
+export const Input: React.FC<Props> = ({ label, name, type, ...rest }) => {
   if (!name) return null
   const inputRef = useRef(null)
-  const { fieldName, registerField, defaultValue, error } = useField(name)
+  const { fieldName, registerField, error } = useField(name)
 
   useEffect(() => {
-    console.log(inputRef.current)
     registerField({
       name: fieldName,
       ref: inputRef.current,
@@ -20,9 +20,10 @@ export const Input: React.FC<Props> = ({ label, name, ...rest }) => {
   }, [])
 
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <input ref={inputRef} name={name} {...rest} />
-    </div>
+    <Container>
+      <Label htmlFor={name}>{label}</Label>
+      <InputStyled ref={inputRef} type={type} {...rest} />
+      {error && <HelperText>{error}</HelperText>}
+    </Container>
   )
 }
