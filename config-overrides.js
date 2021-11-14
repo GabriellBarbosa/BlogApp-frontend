@@ -12,7 +12,8 @@ module.exports = function override(config) {
       '@services': path.resolve(__dirname, 'src/services'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
-      '@helpers': path.resolve(__dirname, 'src/helpers')
+      '@helpers': path.resolve(__dirname, 'src/helpers'),
+      '@providers': path.resolve(__dirname, 'src/providers')
     },
   };
 return config;

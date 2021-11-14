@@ -10,7 +10,8 @@
       "@services/*": ["./src/services/*"],
       "@styles/*": ["./src/styles/*"],
       "@interfaces/*": ["./src/interfaces/*"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@helpers/*": ["./src/helpers/*"],
+      "@providers/*": ["./src/providers/*"],
     }
   }
 }
