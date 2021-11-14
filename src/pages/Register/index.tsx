@@ -5,6 +5,8 @@ import { FormHandles } from '@unform/core'
 import { Button } from '@components/Button'
 import { ResponseError } from '@interfaces/responseError'
 import { api } from '@services/api'
+import { useAuth } from '@hooks/useAuth'
+import { UserProps } from '@interfaces/user'
 import * as Yup from 'yup'
 
 interface ErrProps {
@@ -26,10 +28,12 @@ interface MyError {
 export const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const { setUser } = useAuth()
 
   const handleSubmit = async (data: FormProps) => {
     try {
       setLoading(true)
+
       const schema = Yup.object().shape({
         userName: Yup.string()
           .min(2, 'Nome muito curto')
@@ -45,27 +49,27 @@ export const Register: React.FC = () => {
           .required('Campo obrigatório')
       })
 
-      formRef.current?.setErrors({})
-
       await schema.validate(data, {
         abortEarly: false
       })
+
+      formRef.current?.setErrors({})
 
       if (data.confirmPassword != data.password) {
         formRef.current?.setErrors({
           password: 'As senhas precisam ser iguais',
           confirmPassword: 'As senhas precisam ser iguais'
         })
-        setLoading(false)
         return
       }
 
       const response = await api.post('auth/register', data)
       window.localStorage.setItem('token', response.data.token)
-
+      if (setUser) {
+        setUser(response.data.user as UserProps)
+      }
       setLoading(false)
     } catch (err: unknown) {
-      setLoading(false)
       if (err instanceof Yup.ValidationError) {
         const errorMessages: ErrProps = {}
         err.inner.forEach(error => {
@@ -75,11 +79,13 @@ export const Register: React.FC = () => {
           }
         })
         formRef.current?.setErrors(errorMessages)
+        setLoading(false)
         return
       }
 
       const { response, status } = err as MyError
       if (status === 500) {
+        setLoading(false)
         return
       }
       const errorMessages: ErrProps = {}
@@ -87,6 +93,8 @@ export const Register: React.FC = () => {
         const { field, message } = error
         errorMessages[field] = message
         formRef.current?.setErrors(errorMessages)
+        setLoading(false)
+        return
       })
     }
   }
