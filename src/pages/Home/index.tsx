@@ -5,17 +5,25 @@ import { PostProps } from '@interfaces/post'
 import { Posts } from '@components/ListPosts'
 import { NoResults } from '@components/NoResults'
 import { AddPost } from '@components/AddPost'
+import { useSnackbar } from '@hooks/useSnackbar'
 
 export const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostProps[]>([])
+  const snack = useSnackbar()
 
   useEffect(() => {
     const getPosts = async () => {
       try {
         const { data } = await api.get('posts')
         setPosts(data)
-      } catch (error) {
-        console.log(error)
+      } catch {
+        if (snack.setValue) {
+          snack.setValue({
+            open: true,
+            message: 'Ocorreu um erro no nosso servidor',
+            severity: 'error'
+          })
+        }
       }
     }
     getPosts()
