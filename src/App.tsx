@@ -5,14 +5,15 @@ import { ThemeProvider } from 'styled-components'
 import { AppRoutes } from './routes'
 import { SnackbarComponent } from '@components/Snackbar'
 import { useSnackbar } from '@hooks/useSnackbar'
+
 const App: React.FC = () => {
   const { value } = useSnackbar()
 
   return (
     <ThemeProvider theme={theme}>
+      {value && <SnackbarComponent {...value} />}
       <AppRoutes />
       <GlobalStyle />
-      {value && <SnackbarComponent {...value} />}
     </ThemeProvider>
   )
 }

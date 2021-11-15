@@ -1,11 +1,5 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
-
-interface AlertProps {
-  open: boolean
-  message: string
-  severity: 'success' | 'info' | 'warning' | 'error'
-  duration?: number
-}
+import { AlertProps } from '@interfaces/alert'
 
 interface Props {
   value: AlertProps | null

@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
-
-interface Props {
-  open: boolean
-  severity: 'success' | 'info' | 'warning' | 'error'
-  message: string
-  duration?: number
-}
+import { AlertProps as Props } from '@interfaces/alert'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
