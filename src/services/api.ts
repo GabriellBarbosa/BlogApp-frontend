@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseURL = 'http://localhost:3333'
 const token = localStorage.getItem('token')
 const headers = {
-  Authorization: 'No token'
+  Authorization: ''
 }
 
 if (token) {
