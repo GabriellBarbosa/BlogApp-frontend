@@ -3,8 +3,8 @@ import { AlertContext } from '@providers/alert'
 import { AlertProps } from '@interfaces/alert'
 
 export const useSnackbar: () => {
-  value?: AlertProps | null | undefined
-  setValue?: React.Dispatch<React.SetStateAction<AlertProps | null>> | undefined
+  value?: AlertProps[] | null | undefined
+  addAlert?: (alert: AlertProps) => void
 } = () => {
   const alert = useContext(AlertContext)
   return { ...alert }

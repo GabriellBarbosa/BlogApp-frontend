@@ -1,33 +1,24 @@
-import React, { useState } from 'react'
-import Snackbar from '@mui/material/Snackbar'
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import React from 'react'
+import { Container } from './styles'
 import { AlertProps as Props } from '@interfaces/alert'
+import { Alert } from './Alert'
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+interface OwnProps {
+  alerts: Props[] | null | undefined
+}
 
-export const SnackbarComponent: React.FC<Props> = ({
-  open,
-  severity,
-  message,
-  duration = 6000
-}) => {
-  const [snackOpen, setSnackOpen] = useState<boolean>(open)
-  const handleClose = () => setSnackOpen(false)
-
+export const SnackbarComponent: React.FC<OwnProps> = ({ alerts }) => {
   return (
-    <Snackbar
-      open={snackOpen}
-      autoHideDuration={duration}
-      onClose={handleClose}
-    >
-      <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-        {message}
-      </Alert>
-    </Snackbar>
+    <Container>
+      {alerts &&
+        alerts.length &&
+        alerts.map((alert, index) => (
+          <Alert
+            key={index}
+            message={alert.message}
+            severity={alert.severity}
+          />
+        ))}
+    </Container>
   )
 }

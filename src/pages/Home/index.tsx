@@ -17,9 +17,8 @@ export const Home: React.FC = () => {
         const { data } = await api.get('posts')
         setPosts(data)
       } catch {
-        if (snack.setValue) {
-          snack.setValue({
-            open: true,
+        if (snack.addAlert) {
+          snack.addAlert({
             message: 'Ocorreu um erro no nosso servidor',
             severity: 'error'
           })
