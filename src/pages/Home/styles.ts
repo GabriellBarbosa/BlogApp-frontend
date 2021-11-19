@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   max-width: 720px;
   padding: 0 20px;
-  margin: 0 auto;
+  margin: 40px auto;
 `
 export const AddPostWrapper = styled.div`
   max-width: 300px;
