@@ -24,12 +24,12 @@ export const Header: React.FC = () => {
           {user ? (
             <MyProfie to="/meu-perfil">
               <Avatar
-                userName={user.userName && user.userName}
+                userName={user.userName}
                 maxWidth={30}
                 maxHeight={30}
                 fontSize={16}
               />
-              Olá, {user.userName && user.userName}
+              Olá, {user.userName}
             </MyProfie>
           ) : (
             <NavLink to="/login">
