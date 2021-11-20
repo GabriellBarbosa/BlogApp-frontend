@@ -1,8 +1,10 @@
 import React from 'react'
-import { Container, Wrapper, NavLinkStyled, MyProfie } from './styles'
+import { Container, Wrapper, HomeLink, MyProfie } from './styles'
 import { Home } from '@mui/icons-material'
 import { useAuth } from '@hooks/useAuth'
 import { Avatar } from '@components/Avatar'
+import { Button } from '@components/Button'
+import { NavLink } from 'react-router-dom'
 
 export const Header: React.FC = () => {
   const { user } = useAuth()
@@ -10,22 +12,24 @@ export const Header: React.FC = () => {
   return (
     <Container>
       <Wrapper>
-        <NavLinkStyled to="/">
+        <HomeLink to="/">
           <Home />
-        </NavLinkStyled>
+        </HomeLink>
         <>
           {user ? (
-            <span>Login/Criar Conta</span>
-          ) : (
             <MyProfie to="/meu-perfil">
               <Avatar
-                userName="biel900"
+                userName={user.userName}
                 maxWidth={30}
                 maxHeight={30}
                 fontSize={16}
               />
-              Olá, Gabriel
+              Olá, {user.userName}
             </MyProfie>
+          ) : (
+            <NavLink to="/login">
+              <Button style={{ fontWeight: 400, fontSize: 16 }}>Entrar</Button>
+            </NavLink>
           )}
         </>
       </Wrapper>
