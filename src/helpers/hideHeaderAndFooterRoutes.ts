@@ -1,1 +1,1 @@
-export const routes = ['/login', '/criar-conta']
+export const routes = ['/login', '/criar-conta', '/recuperar-senha']

@@ -23,7 +23,7 @@ export const AuthProvider: React.FC = props => {
     const getUser = async () => {
       try {
         const { data } = await api.post('auth/auto-login')
-        setUser(data)
+        setUser(data.user)
       } catch (err) {
         setUser(null)
       }
