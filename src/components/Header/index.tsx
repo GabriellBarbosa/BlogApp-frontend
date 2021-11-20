@@ -4,11 +4,16 @@ import { Home } from '@mui/icons-material'
 import { useAuth } from '@hooks/useAuth'
 import { Avatar } from '@components/Avatar'
 import { Button } from '@components/Button'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { routes } from '@helpers/hideHeaderAndFooterRoutes'
 
 export const Header: React.FC = () => {
   const { user } = useAuth()
+  const { pathname } = useLocation()
 
+  const notShowHeader = routes.includes(pathname)
+
+  if (notShowHeader) return null
   return (
     <Container>
       <Wrapper>
