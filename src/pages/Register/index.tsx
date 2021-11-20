@@ -7,6 +7,7 @@ import { ResponseError } from '@interfaces/responseError'
 import { api } from '@services/api'
 import { useAuth } from '@hooks/useAuth'
 import { UserProps } from '@interfaces/user'
+import { validateBeforeSubmit } from '@helpers/validateBeforeSubmit'
 import * as Yup from 'yup'
 
 interface ErrProps {
@@ -60,6 +61,7 @@ export const Register: React.FC = () => {
           password: 'As senhas precisam ser iguais',
           confirmPassword: 'As senhas precisam ser iguais'
         })
+        setLoading(false)
         return
       }
 
@@ -71,14 +73,7 @@ export const Register: React.FC = () => {
       setLoading(false)
     } catch (err: unknown) {
       if (err instanceof Yup.ValidationError) {
-        const errorMessages: ErrProps = {}
-        err.inner.forEach(error => {
-          const { path, message } = error
-          if (path && message) {
-            errorMessages[path] = message
-          }
-        })
-        formRef.current?.setErrors(errorMessages)
+        await validateBeforeSubmit(err, formRef)
         setLoading(false)
         return
       }
