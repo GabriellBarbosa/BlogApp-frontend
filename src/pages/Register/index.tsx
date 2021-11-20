@@ -1,18 +1,18 @@
 import React, { useRef, useState } from 'react'
-import { Container, Title, FormStyled, FieldsWrapper } from './styles'
+import { Container, Title, FormStyled, FieldsWrapper, Login } from './styles'
 import { Input } from '@components/Input'
 import { FormHandles } from '@unform/core'
 import { Button } from '@components/Button'
-import { ResponseError } from '@interfaces/responseError'
 import { api } from '@services/api'
 import { useAuth } from '@hooks/useAuth'
+import { useSnackbar } from '@hooks/useSnackbar'
 import { UserProps } from '@interfaces/user'
-import { validateBeforeSubmit } from '@helpers/validateBeforeSubmit'
+import { Link, useNavigate } from 'react-router-dom'
+import {
+  validateBeforeSubmit,
+  handleBackendErrors
+} from '@helpers/formValidation'
 import * as Yup from 'yup'
-
-interface ErrProps {
-  [key: string]: string
-}
 
 interface FormProps {
   userName: string
@@ -21,15 +21,12 @@ interface FormProps {
   confirmPassword: string
 }
 
-interface MyError {
-  response: { data: { message: ResponseError[] } }
-  status: number
-}
-
 export const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const [loading, setLoading] = useState<boolean>(false)
+  const navigate = useNavigate()
   const { setUser } = useAuth()
+  const { addAlert } = useSnackbar()
 
   const handleSubmit = async (data: FormProps) => {
     try {
@@ -71,6 +68,13 @@ export const Register: React.FC = () => {
         setUser(response.data.user as UserProps)
       }
       setLoading(false)
+      navigate('/')
+      if (addAlert) {
+        addAlert({
+          message: `Seja bem-vindo(a), ${response.data.user.userName}`,
+          severity: 'info'
+        })
+      }
     } catch (err: unknown) {
       if (err instanceof Yup.ValidationError) {
         await validateBeforeSubmit(err, formRef)
@@ -78,19 +82,8 @@ export const Register: React.FC = () => {
         return
       }
 
-      const { response, status } = err as MyError
-      if (status === 500) {
-        setLoading(false)
-        return
-      }
-      const errorMessages: ErrProps = {}
-      response.data.message.forEach((error: ResponseError) => {
-        const { field, message } = error
-        errorMessages[field] = message
-        formRef.current?.setErrors(errorMessages)
-        setLoading(false)
-        return
-      })
+      handleBackendErrors(err, formRef)
+      setLoading(false)
     }
   }
 
@@ -109,6 +102,9 @@ export const Register: React.FC = () => {
           />
         </FieldsWrapper>
         <Button loading={loading}>Pronto</Button>
+        <Login>
+          Já possui conta? <Link to="/login">Login</Link>
+        </Login>
       </FormStyled>
     </Container>
   )

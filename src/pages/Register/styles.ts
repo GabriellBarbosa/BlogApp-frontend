@@ -30,3 +30,12 @@ export const FieldsWrapper = styled.div`
     margin-bottom: 10px;
   }
 `
+
+export const Login = styled.p`
+  margin-top: 20px;
+  color: ${({ theme }) => theme.colors.lightText};
+  a {
+    color: ${({ theme }) => theme.colors.lightText};
+    text-decoration: underline;
+  }
+`

@@ -30,3 +30,23 @@ export const FieldsWrapper = styled.div`
     margin-bottom: 10px;
   }
 `
+
+export const RecoverPassword = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  a {
+    font-size: 16px;
+    padding: 5px 0;
+    color: ${({ theme }) => theme.colors.lightText};
+  }
+`
+
+export const Register = styled.p`
+  margin-top: 20px;
+  color: ${({ theme }) => theme.colors.lightText};
+  a {
+    color: ${({ theme }) => theme.colors.lightText};
+    text-decoration: underline;
+  }
+`
