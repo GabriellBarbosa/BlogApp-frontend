@@ -17,6 +17,7 @@ export default createGlobalStyle`
 
   a, button {
     font-family: 'Roboto', sans-serif;
+    color: ${props => props.theme.colors.text};
   }
 
   a {

@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { HTMLAttributes } from 'react'
 import { Container, Loading } from './styles'
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLButtonElement> {
   loading?: boolean
   disabled?: boolean
 }
 
-export const Button: React.FC<Props> = ({ loading, disabled, children }) => {
+export const Button: React.FC<Props> = ({
+  loading,
+  disabled,
+  children,
+  ...rest
+}) => {
   return (
-    <Container disabled={disabled} className={loading ? 'loading' : ''}>
-      {loading && <Loading />}
-      {children}
+    <Container
+      disabled={disabled}
+      className={loading ? 'loading' : ''}
+      {...rest}
+    >
+      <div>
+        {loading && <Loading />}
+        {children}
+      </div>
     </Container>
   )
 }
