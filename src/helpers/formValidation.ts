@@ -1,6 +1,7 @@
 import { MyError } from '@interfaces/myError'
 import { ResponseError } from '@interfaces/responseError'
 import { FormHandles } from '@unform/core'
+import { useSnackbar } from '@hooks/useSnackbar'
 import * as Yup from 'yup'
 
 interface ErrProps {
@@ -24,7 +25,14 @@ export const handleBackendErrors = (
   formRef: React.RefObject<FormHandles>
 ) => {
   const { response, status } = err as MyError
+  const { addAlert } = useSnackbar()
   if (status === 500) {
+    if (addAlert) {
+      addAlert({
+        message: 'Ocorreu um erro no nosso servidor',
+        severity: 'error'
+      })
+    }
     return
   }
   const errorMessages: ErrProps = {}
