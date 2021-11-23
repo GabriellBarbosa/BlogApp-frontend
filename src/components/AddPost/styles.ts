@@ -27,29 +27,3 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 30px;
 `
-
-export const Content = styled(TextField)`
-  .MuiInputLabel-root,
-  .MuiInputLabel-root.Mui-focused,
-  .MuiOutlinedInput-root {
-    color: ${({ theme }) => theme.colors.text};
-  }
-  .MuiOutlinedInput-root {
-    .MuiOutlinedInput-notchedOutline {
-      border-color: ${({ theme }) => theme.colors.lightText};
-    }
-    .MuiSvgIcon-root {
-      fill: ${({ theme }) => theme.colors.text};
-    }
-    &.Mui-focused .MuiOutlinedInput-notchedOutline,
-    &:hover .MuiOutlinedInput-notchedOutline {
-      border-color: ${({ theme }) => theme.colors.primary};
-    }
-  }
-`
-
-export const Category = styled(Content)`
-  .MuiFormHelperText-root {
-    color: ${({ theme }) => theme.colors.text};
-  }
-`
