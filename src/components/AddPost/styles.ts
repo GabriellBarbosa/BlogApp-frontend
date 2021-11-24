@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { TextField } from '@mui/material'
+import { Form } from '@unform/web'
 
 export const Container = styled.div`
   padding: 20px;
@@ -21,7 +21,7 @@ export const Title = styled.h3`
   text-align: center;
 `
 
-export const Form = styled.form`
+export const FormStyled = styled(Form)`
   padding: 20px;
   display: flex;
   flex-direction: column;

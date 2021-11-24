@@ -1,5 +1,5 @@
 export interface CategoryProps {
-  id: string
+  _id: string
   name: string
   slug: string
   updatedAt: Date

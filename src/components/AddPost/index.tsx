@@ -1,5 +1,5 @@
-import React, { FormEvent, useState, useEffect } from 'react'
-import { Container, ModalWrapper, Title, Form } from './styles'
+import React, { useState, useEffect, useRef } from 'react'
+import { Container, ModalWrapper, Title, FormStyled } from './styles'
 import { AddCircle } from '@mui/icons-material'
 import { Modal } from '@components/Modal'
 import { Button } from '@components/Button'
@@ -8,17 +8,25 @@ import { CategoryProps } from '@interfaces/category'
 import { useSnackbar } from '@hooks/useSnackbar'
 import { Select } from '@components/Fields/Select'
 
+interface FormProps {
+  content: string
+  category: string
+}
+
 export const AddPost: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const [categories, setCategories] = useState<CategoryProps[]>([])
   const { addAlert } = useSnackbar()
+  const formRef = useRef(null)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault()
+  const handleSubmit = (data: FormProps) => {
+    setLoading(true)
+    console.log(data)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -26,7 +34,7 @@ export const AddPost: React.FC = () => {
       try {
         const { data } = await api.get('admin/categories')
         setCategories(data)
-      } catch (error) {
+      } catch {
         if (addAlert) {
           addAlert({
             message: 'Erro ao carregar as categorias',
@@ -44,10 +52,18 @@ export const AddPost: React.FC = () => {
         <Modal open={open} handleClose={handleClose}>
           <ModalWrapper>
             <Title>Adicionar postagem</Title>
-            <Form onSubmit={handleSubmit}>
-              <Select label="Categoria da postagem" options={categories} />
+            <FormStyled ref={formRef} onSubmit={handleSubmit}>
+              {categories.length && (
+                <Select label="Categoria da postagem" name="category">
+                  {categories.map(({ _id, name }) => (
+                    <option key={_id} value={_id}>
+                      {name}
+                    </option>
+                  ))}
+                </Select>
+              )}
               <Button loading={loading}>Criar Postagem</Button>
-            </Form>
+            </FormStyled>
           </ModalWrapper>
         </Modal>
       )}

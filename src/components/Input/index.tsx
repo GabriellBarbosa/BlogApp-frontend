@@ -4,10 +4,10 @@ import { useField } from '@unform/core'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label: string
+  name: string
 }
 
-export const Input: React.FC<Props> = ({ label, name, type, ...rest }) => {
-  if (!name) return null
+export const Input: React.FC<Props> = ({ label, name, ...rest }) => {
   const inputRef = useRef(null)
   const { fieldName, registerField, error } = useField(name)
 
@@ -22,7 +22,7 @@ export const Input: React.FC<Props> = ({ label, name, type, ...rest }) => {
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
-      <InputStyled ref={inputRef} type={type} {...rest} />
+      <InputStyled ref={inputRef} name={name} {...rest} />
       {error && <HelperText>{error}</HelperText>}
     </Container>
   )

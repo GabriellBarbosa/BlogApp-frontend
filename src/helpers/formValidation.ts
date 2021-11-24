@@ -8,7 +8,10 @@ interface ErrProps {
   [key: string]: string
 }
 
-export const validateBeforeSubmit = async (
+export const validateBeforeSubmit: (
+  err: Yup.ValidationError,
+  formRef: React.RefObject<FormHandles>
+) => ErrProps = (
   err: Yup.ValidationError,
   formRef: React.RefObject<FormHandles>
 ) => {
@@ -18,9 +21,13 @@ export const validateBeforeSubmit = async (
     if (path && message) errorMessages[path] = message
   })
   formRef.current?.setErrors(errorMessages)
+  return errorMessages
 }
 
-export const handleBackendErrors = (
+export const handleBackendErrors: (
+  err: unknown,
+  formRef: React.RefObject<FormHandles>
+) => null | undefined = (
   err: unknown,
   formRef: React.RefObject<FormHandles>
 ) => {
@@ -33,13 +40,13 @@ export const handleBackendErrors = (
         severity: 'error'
       })
     }
-    return
+    return null
   }
   const errorMessages: ErrProps = {}
   response.data.message.forEach((error: ResponseError) => {
     const { field, message } = error
     errorMessages[field] = message
     formRef.current?.setErrors(errorMessages)
-    return
+    return errorMessages
   })
 }
