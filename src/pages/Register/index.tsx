@@ -8,10 +8,7 @@ import { useAuth } from '@hooks/useAuth'
 import { useSnackbar } from '@hooks/useSnackbar'
 import { UserProps } from '@interfaces/user'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  validateBeforeSubmit,
-  handleBackendErrors
-} from '@helpers/formValidation'
+import { useErrors } from '@hooks/useErrors'
 import * as Yup from 'yup'
 
 interface FormProps {
@@ -27,6 +24,7 @@ export const Register: React.FC = () => {
   const navigate = useNavigate()
   const { setUser } = useAuth()
   const { addAlert } = useSnackbar()
+  const { handleBackendErrors, validateBeforeSubmit } = useErrors()
 
   const handleSubmit = async (data: FormProps) => {
     try {
@@ -77,11 +75,10 @@ export const Register: React.FC = () => {
       }
     } catch (err: unknown) {
       if (err instanceof Yup.ValidationError) {
-        await validateBeforeSubmit(err, formRef)
+        validateBeforeSubmit(err, formRef)
         setLoading(false)
         return
       }
-
       handleBackendErrors(err, formRef)
       setLoading(false)
     }

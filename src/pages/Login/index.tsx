@@ -14,10 +14,7 @@ import { Button } from '@components/Button'
 import { api } from '@services/api'
 import { useAuth } from '@hooks/useAuth'
 import { UserProps } from '@interfaces/user'
-import {
-  validateBeforeSubmit,
-  handleBackendErrors
-} from '@helpers/formValidation'
+import { useErrors } from '@hooks/useErrors'
 import * as Yup from 'yup'
 
 interface FormProps {
@@ -30,6 +27,7 @@ export const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const navigate = useNavigate()
   const { setUser } = useAuth()
+  const { validateBeforeSubmit, handleBackendErrors } = useErrors()
 
   const handleSubmit = async (data: FormProps) => {
     try {
@@ -57,11 +55,10 @@ export const Login: React.FC = () => {
       navigate('/')
     } catch (err: unknown) {
       if (err instanceof Yup.ValidationError) {
-        await validateBeforeSubmit(err, formRef)
+        validateBeforeSubmit(err, formRef)
         setLoading(false)
         return
       }
-
       handleBackendErrors(err, formRef)
       setLoading(false)
     }

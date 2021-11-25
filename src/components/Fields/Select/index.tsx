@@ -36,7 +36,7 @@ export const Select: React.FC<Props> = ({ label, name, children, ...rest }) => {
 
   return (
     <Container>
-      <Label htmlFor="">{label}</Label>
+      <Label htmlFor={name}>{label}</Label>
       <SelectStyled name={name} {...rest}>
         {React.Children.map(children, child =>
           React.cloneElement(child as ReactElement, {

@@ -25,5 +25,5 @@ export const FormStyled = styled(Form)`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 `

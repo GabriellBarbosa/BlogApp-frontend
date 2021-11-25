@@ -54,7 +54,7 @@ export const AddPost: React.FC = () => {
             <Title>Adicionar postagem</Title>
             <FormStyled ref={formRef} onSubmit={handleSubmit}>
               {categories.length && (
-                <Select label="Categoria da postagem" name="category">
+                <Select label="Categoria" name="category">
                   {categories.map(({ _id, name }) => (
                     <option key={_id} value={_id}>
                       {name}
@@ -62,7 +62,7 @@ export const AddPost: React.FC = () => {
                   ))}
                 </Select>
               )}
-              <Button loading={loading}>Criar Postagem</Button>
+              <Button loading={loading}>Adicionar</Button>
             </FormStyled>
           </ModalWrapper>
         </Modal>
