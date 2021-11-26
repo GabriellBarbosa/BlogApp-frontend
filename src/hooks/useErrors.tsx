@@ -56,6 +56,15 @@ export const useErrors: () => {
       }
       return null
     }
+    if (response.status === 401) {
+      if (addAlert) {
+        addAlert({
+          message: 'Você não possui permissão para acessar esse recurso',
+          severity: 'warning'
+        })
+      }
+      return null
+    }
     const errorMessages: ErrProps = {}
     response.data.message.forEach((error: ResponseError) => {
       const { field, message } = error

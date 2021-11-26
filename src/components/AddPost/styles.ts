@@ -25,5 +25,10 @@ export const FormStyled = styled(Form)`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  > div {
+    margin-bottom: 10px;
+  }
+  > button {
+    margin-top: 20px;
+  }
 `

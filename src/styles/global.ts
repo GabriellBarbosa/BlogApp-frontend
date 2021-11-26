@@ -27,4 +27,8 @@ export default createGlobalStyle`
   ul {
     list-style: none;
   }
+
+  textarea {
+    font-family: 'Roboto', sans-serif;
+  }
 `

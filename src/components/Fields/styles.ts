@@ -32,6 +32,11 @@ export const SelectStyled = styled.select`
   ${Field}
 `
 
+export const TextareaStyled = styled.textarea`
+  ${Field}
+  resize: none;
+`
+
 export const HelperText = styled.span`
   padding: 0 4px;
   font-size: 12px;
