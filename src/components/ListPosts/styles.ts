@@ -20,6 +20,13 @@ export const ContentWrapper = styled.div`
   width: 100%;
 `
 
+export const PostInfo = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  column-gap: 10px;
+`
+
 export const UserName = styled.span`
   display: block;
 `
@@ -27,6 +34,29 @@ export const UserName = styled.span`
 export const PostDate = styled.span`
   font-size: 12px;
   color: ${({ theme }) => theme.colors.lightText};
+`
+
+export const Delete = styled.button`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.colors.error};
+  background-color: transparent;
+  transition: 0.2s;
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.borderColor};
+  }
+  > svg {
+    width: 24px;
+    height: 24px;
+  }
+`
+
+export const Edit = styled(Delete)`
+  color: ${({ theme }) => theme.colors.lightText};
+  margin-left: 10px;
 `
 
 export const Main = styled.main`
