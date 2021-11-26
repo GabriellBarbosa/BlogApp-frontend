@@ -32,3 +32,7 @@ export const FormStyled = styled(Form)`
     margin-top: 20px;
   }
 `
+
+export const AddPostText = styled.p`
+  font-size: 16px;
+`

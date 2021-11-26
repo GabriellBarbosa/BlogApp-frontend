@@ -30,5 +30,6 @@ export default createGlobalStyle`
 
   textarea {
     font-family: 'Roboto', sans-serif;
+    line-height: 24px;
   }
 `

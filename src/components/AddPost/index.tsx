@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, ModalWrapper, Title, FormStyled } from './styles'
+import {
+  Container,
+  ModalWrapper,
+  Title,
+  FormStyled,
+  AddPostText
+} from './styles'
 import { AddCircle } from '@mui/icons-material'
 import { Modal } from '@components/Modal'
 import { Button } from '@components/Button'
@@ -10,6 +16,7 @@ import { Select } from '@components/Fields/Select'
 import { Textarea } from '@components/Fields/Textarea'
 import { useErrors } from '@hooks/useErrors'
 import { useAuth } from '@hooks/useAuth'
+import { PostProps } from '@interfaces/post'
 import * as Yup from 'yup'
 
 interface FormProps {
@@ -17,7 +24,11 @@ interface FormProps {
   category: string
 }
 
-export const AddPost: React.FC = () => {
+interface Props {
+  setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>
+}
+
+export const AddPost: React.FC<Props> = ({ setPosts }) => {
   const { user } = useAuth()
   if (!user) return null
 
@@ -30,6 +41,20 @@ export const AddPost: React.FC = () => {
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  const getPosts = async () => {
+    try {
+      const { data } = await api.get('posts')
+      setPosts(data)
+    } catch {
+      if (addAlert) {
+        addAlert({
+          message: 'Ocorreu um erro no nosso servidor',
+          severity: 'error'
+        })
+      }
+    }
+  }
 
   const handleSubmit = async (data: FormProps) => {
     try {
@@ -44,6 +69,7 @@ export const AddPost: React.FC = () => {
       })
 
       const apiAuthenticated = authenticatedRequest()
+
       if (!apiAuthenticated) {
         if (addAlert) {
           addAlert({
@@ -53,10 +79,17 @@ export const AddPost: React.FC = () => {
         }
         return null
       }
-      const response = await apiAuthenticated.post('posts/add', data)
-      // setPosts(response.data.something)
 
+      await apiAuthenticated.post('posts/add', data)
+      getPosts()
       setLoading(false)
+      setOpen(false)
+      if (addAlert) {
+        addAlert({
+          message: 'Postagem criada com sucesso',
+          severity: 'success'
+        })
+      }
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         validateBeforeSubmit(err, formRef)
@@ -114,7 +147,7 @@ export const AddPost: React.FC = () => {
 
       <Container onClick={handleOpen}>
         <AddCircle />
-        <p>Adicionar nova postagem</p>
+        <AddPostText>Adicionar nova postagem</AddPostText>
       </Container>
     </>
   )

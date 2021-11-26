@@ -31,7 +31,7 @@ export const Home: React.FC = () => {
   return (
     <Container>
       <AddPostWrapper>
-        <AddPost />
+        <AddPost setPosts={setPosts} />
       </AddPostWrapper>
       {posts.length ? (
         <>
