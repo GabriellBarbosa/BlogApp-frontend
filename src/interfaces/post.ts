@@ -2,7 +2,7 @@ import { UserProps } from './user'
 import { CategoryProps } from './category'
 
 export interface PostProps {
-  id: string
+  _id: string
   author: UserProps
   category: CategoryProps
   content: string
