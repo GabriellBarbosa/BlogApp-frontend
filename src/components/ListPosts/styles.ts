@@ -20,7 +20,14 @@ export const ContentWrapper = styled.div`
   width: 100%;
 `
 
-export const UserName = styled.span``
+export const UserName = styled.span`
+  display: block;
+`
+
+export const PostDate = styled.span`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.lightText};
+`
 
 export const Main = styled.main`
   background-color: ${({ theme }) => theme.colors.contentBg};
@@ -33,7 +40,7 @@ export const Main = styled.main`
 
 export const Content = styled.p`
   font-size: 16px;
-  color: ${props => props.theme.colors.lightText};
+  color: ${props => props.theme.colors.text};
   margin-bottom: 10px;
 `
 
