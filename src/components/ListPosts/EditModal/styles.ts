@@ -1,16 +1,8 @@
 import styled from 'styled-components'
 import { Form } from '@unform/web'
 
-export const Container = styled.div`
-  padding: 20px;
-  background-color: #0d1117;
-  border: 1px solid #30363d;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-`
 export const ModalWrapper = styled.div`
-  width: 420px;
+  width: 480px;
 `
 
 export const Title = styled.h3`
@@ -31,8 +23,4 @@ export const FormStyled = styled(Form)`
   > button {
     margin-top: 20px;
   }
-`
-
-export const AddPostText = styled.p`
-  font-size: 16px;
 `

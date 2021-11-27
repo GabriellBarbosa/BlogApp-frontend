@@ -36,7 +36,7 @@ export const Home: React.FC = () => {
       {posts.length ? (
         <>
           <RecentText>Postagens recentes</RecentText>
-          <Posts posts={posts} />
+          <Posts posts={posts} setPosts={setPosts} />
           <NoResults message={'Não há mais postagens'} />
         </>
       ) : (

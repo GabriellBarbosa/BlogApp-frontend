@@ -15,6 +15,7 @@ const NavLinkStyled = styled(NavLink)`
 export const Container = styled.header`
   display: block;
   background-color: ${({ theme }) => theme.colors.contentBg};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderColor};
 `
 export const Wrapper = styled.div`
   max-width: 720px;
