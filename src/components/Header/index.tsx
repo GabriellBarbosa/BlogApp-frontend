@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
                 maxHeight={30}
                 fontSize={16}
               />
-              Olá, {user.userName}
+              {user.userName}
             </MyProfie>
           ) : (
             <NavLink to="/login">
