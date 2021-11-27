@@ -70,12 +70,13 @@ export const Main = styled.main`
 
 export const Content = styled.p`
   font-size: 16px;
+  line-height: 24px;
   color: ${props => props.theme.colors.text};
   margin-bottom: 10px;
 `
 
 export const Category = styled.p`
-  color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.lightText};
   font-size: 12px;
   text-decoration: underline;
   text-transform: lowercase;

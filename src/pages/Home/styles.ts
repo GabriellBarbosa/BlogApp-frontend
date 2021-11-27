@@ -6,7 +6,7 @@ export const Container = styled.div`
   margin: 40px auto;
 `
 export const AddPostWrapper = styled.div`
-  max-width: 300px;
+  max-width: 240px;
   margin: 0 auto;
 `
 
