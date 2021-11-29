@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { ModalWrapper, Title, FormStyled } from './styles'
+import { ModalWrapper, Title, FormStyled } from '../styles'
 import { Modal } from '@components/Modal'
 import { Textarea } from '@components/Fields/Textarea'
 import { CategoryProps } from '@interfaces/category'

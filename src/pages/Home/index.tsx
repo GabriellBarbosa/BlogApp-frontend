@@ -11,20 +11,21 @@ export const Home: React.FC = () => {
   const [posts, setPosts] = useState<PostProps[]>([])
   const snack = useSnackbar()
 
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const { data } = await api.get('posts')
-        setPosts(data)
-      } catch {
-        if (snack.addAlert) {
-          snack.addAlert({
-            message: 'Ocorreu um erro no nosso servidor',
-            severity: 'error'
-          })
-        }
+  const getPosts = async () => {
+    try {
+      const { data } = await api.get('posts')
+      setPosts(data)
+    } catch {
+      if (snack.addAlert) {
+        snack.addAlert({
+          message: 'Ocorreu um erro ao carregar as postagens',
+          severity: 'error'
+        })
       }
     }
+  }
+
+  useEffect(() => {
     getPosts()
   }, [])
 
@@ -36,7 +37,7 @@ export const Home: React.FC = () => {
       {posts.length ? (
         <>
           <RecentText>Postagens recentes</RecentText>
-          <Posts posts={posts} setPosts={setPosts} />
+          <Posts posts={posts} setPosts={setPosts} getPosts={getPosts} />
           <NoResults message={'Não há mais postagens'} />
         </>
       ) : (
