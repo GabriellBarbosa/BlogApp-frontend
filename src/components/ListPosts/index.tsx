@@ -37,6 +37,7 @@ export const Posts: React.FC<Props> = ({ posts, setPosts, getPosts }) => {
   const { user } = useAuth()
 
   const openModal = (modal: 'edit' | 'delete', id: string) => {
+    console.log(posts)
     switch (modal) {
       case 'edit':
         setEditPostId(id)

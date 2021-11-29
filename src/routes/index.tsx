@@ -4,6 +4,7 @@ import { Home } from '@pages/Home'
 import { Register } from '@pages/Register'
 import { Login } from '@pages/Login'
 import { Header } from '@components/Header'
+import { PostsByCategory } from '@pages/PostsByCategory'
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/criar-conta" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/posts/:category" element={<PostsByCategory />} />
       </Routes>
     </BrowserRouter>
   )
