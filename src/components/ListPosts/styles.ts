@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Form } from '@unform/web'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.ul``
 
@@ -121,4 +122,23 @@ export const ButtonsWrapper = styled.div`
   > button:last-child {
     margin-left: 10px;
   }
+`
+
+export const CommentWrapper = styled(Link)`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  > svg {
+    color: ${({ theme }) => theme.colors.lightText};
+  }
+  &:hover {
+    span {
+      text-decoration: underline;
+    }
+  }
+`
+
+export const CommentsQuantity = styled.span`
+  margin-left: 10px;
+  color: ${({ theme }) => theme.colors.lightText};
 `
