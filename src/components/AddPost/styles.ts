@@ -10,7 +10,7 @@ export const Container = styled.div`
   cursor: pointer;
 `
 export const ModalWrapper = styled.div`
-  width: 420px;
+  width: 480px;
 `
 
 export const Title = styled.h3`
