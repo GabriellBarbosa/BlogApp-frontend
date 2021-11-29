@@ -21,22 +21,50 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '@hooks/useAuth'
 import { Edit as EditIcon, DeleteForeverOutlined } from '@mui/icons-material'
 import { EditModal } from './EditModal'
+import { DeleteModal } from './DeleteModal'
 
 interface Props {
   posts: PostProps[]
   setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>
+  getPosts: () => Promise<void>
 }
 
-export const Posts: React.FC<Props> = ({ posts, setPosts }) => {
+export const Posts: React.FC<Props> = ({ posts, setPosts, getPosts }) => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false)
-  const [editPostId, setEditPostId] = useState<string>()
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+  const [editPostId, setEditPostId] = useState<string>('')
+  const [deletePostId, setDeletePostId] = useState<string>('')
   const { user } = useAuth()
 
-  const openEditModal = (id: string) => {
-    setEditPostId(id)
-    setEditModalOpen(true)
+  const openModal = (modal: 'edit' | 'delete', id: string) => {
+    switch (modal) {
+      case 'edit':
+        setEditPostId(id)
+        setEditModalOpen(true)
+        break
+      case 'delete':
+        setDeletePostId(id)
+        setDeleteModalOpen(true)
+        break
+      default:
+        break
+    }
   }
-  const handleEditModalClose = () => setEditModalOpen(false)
+
+  const handleClose = (modal: 'edit' | 'delete') => {
+    switch (modal) {
+      case 'edit':
+        setEditPostId('')
+        setEditModalOpen(false)
+        break
+      case 'delete':
+        setDeletePostId('')
+        setDeleteModalOpen(false)
+        break
+      default:
+        break
+    }
+  }
 
   const postDate = (date: Date) => {
     const formattedDate = parseISO(String(date))
@@ -53,8 +81,16 @@ export const Posts: React.FC<Props> = ({ posts, setPosts }) => {
         <EditModal
           postId={editPostId}
           open={editModalOpen}
-          handleClose={handleEditModalClose}
+          handleClose={() => handleClose('edit')}
           setPosts={setPosts}
+        />
+      )}
+      {deletePostId && (
+        <DeleteModal
+          postId={deletePostId}
+          open={deleteModalOpen}
+          handleClose={() => handleClose('delete')}
+          getPostsAfterDelete={getPosts}
         />
       )}
       <Container>
@@ -71,11 +107,14 @@ export const Posts: React.FC<Props> = ({ posts, setPosts }) => {
                     </div>
                     {isThePostOwner(author._id) && (
                       <div>
-                        <Delete title="deletar postagem">
+                        <Delete
+                          onClick={() => openModal('delete', _id)}
+                          title="deletar postagem"
+                        >
                           <DeleteForeverOutlined />
                         </Delete>
                         <Edit
-                          onClick={() => openEditModal(_id)}
+                          onClick={() => openModal('edit', _id)}
                           title="Editar postagem"
                         >
                           <EditIcon />
