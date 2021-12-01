@@ -3,7 +3,7 @@ import { Container, Label, TextareaStyled, HelperText } from '../styles'
 import { useField } from '@unform/core'
 
 interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string
+  label?: string
   name: string
 }
 
@@ -21,7 +21,7 @@ export const Textarea: React.FC<Props> = ({ label, name, ...rest }) => {
 
   return (
     <Container>
-      <Label htmlFor={name}>{label}</Label>
+      {label && <Label htmlFor={name}>{label}</Label>}
       <TextareaStyled ref={textareaRef} name={name} {...rest} />
       {error && <HelperText>{error}</HelperText>}
     </Container>

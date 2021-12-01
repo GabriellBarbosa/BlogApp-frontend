@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import {
   Post as Container,
   PostWrapper,
-  ContentWrapper,
   PostInfo,
+  InfoWrapper,
+  Actions,
   UserName,
   PostDate,
+  Edited,
   Delete,
   Edit,
   Main,
@@ -13,7 +15,7 @@ import {
   Category,
   CommentWrapper,
   CommentsQuantity
-} from '../styles'
+} from './styles'
 import { Avatar } from '@components/Avatar'
 import { UserProps } from '@interfaces/user'
 import { formatDistance, parseISO } from 'date-fns'
@@ -61,6 +63,10 @@ export const Post: React.FC<Props> = ({
 
   const isThePostOwner = (authorId: string) => user?._id === authorId
 
+  const isEdited = () => {
+    return createdAt !== updatedAt ? <Edited>editado</Edited> : null
+  }
+
   const getCommentsQuantity = async () => {
     try {
       const { data } = await api.get(`comments/list/${id}`)
@@ -77,48 +83,48 @@ export const Post: React.FC<Props> = ({
 
   useEffect(() => {
     getCommentsQuantity()
+    isEdited()
   }, [])
   return (
     <Container key={id}>
       <PostWrapper>
         <Avatar userName={author.userName} />
-        <ContentWrapper>
-          <PostInfo>
-            <div>
-              <UserName>{author.userName}</UserName>
-              <PostDate>{postDate(createdAt)}</PostDate>
-            </div>
-            {isThePostOwner(author._id) && (
-              <div>
-                <Delete
-                  onClick={() => openModal('delete', id)}
-                  title="deletar postagem"
-                >
-                  <DeleteForeverOutlined />
-                </Delete>
-                <Edit
-                  onClick={() => openModal('edit', id)}
-                  title="Editar postagem"
-                >
-                  <EditIcon />
-                </Edit>
-              </div>
-            )}
-          </PostInfo>
-          <Main>
-            <Content>{content}</Content>
-            <Link to={`posts/${category.slug}`}>
-              <Category>{category.name}</Category>
-            </Link>
-          </Main>
-          <CommentWrapper to={`post/${id}`}>
-            <Chat />
-            <CommentsQuantity>
-              {commentsQuantity === 0 ? 'nenhum' : commentsQuantity}{' '}
-              {commentsQuantity > 1 ? 'comentários' : 'comentário'}
-            </CommentsQuantity>
-          </CommentWrapper>
-        </ContentWrapper>
+        <PostInfo>
+          <InfoWrapper>
+            <UserName>{author.userName}</UserName>
+            <PostDate>{postDate(createdAt)}</PostDate>
+            {isEdited()}
+          </InfoWrapper>
+          {isThePostOwner(author._id) && (
+            <Actions>
+              <Delete
+                onClick={() => openModal('delete', id)}
+                title="deletar postagem"
+              >
+                <DeleteForeverOutlined />
+              </Delete>
+              <Edit
+                onClick={() => openModal('edit', id)}
+                title="Editar postagem"
+              >
+                <EditIcon />
+              </Edit>
+            </Actions>
+          )}
+        </PostInfo>
+        <Main>
+          <Content>{content}</Content>
+          <Link to={`/posts/${category.slug}`}>
+            <Category>{category.name}</Category>
+          </Link>
+        </Main>
+        <CommentWrapper to={`/post/${id}`}>
+          <Chat />
+          <CommentsQuantity>
+            {commentsQuantity === 0 ? 'nenhum' : commentsQuantity}{' '}
+            {commentsQuantity > 1 ? 'comentários' : 'comentário'}
+          </CommentsQuantity>
+        </CommentWrapper>
       </PostWrapper>
     </Container>
   )

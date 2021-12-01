@@ -1,5 +1,7 @@
+import { UserProps } from './user'
+
 export interface CommentProps {
-  author: string
+  author: UserProps
   post: string
   comment: string
   updatedAt: Date

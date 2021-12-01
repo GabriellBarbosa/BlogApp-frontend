@@ -11,7 +11,7 @@ interface Props {
   postId: string
   open: boolean
   handleClose: () => void
-  getPostsAfterDelete: () => Promise<void>
+  getPostsAfterDelete?: () => Promise<void>
 }
 
 export const DeleteModal: React.FC<Props> = ({
@@ -47,7 +47,9 @@ export const DeleteModal: React.FC<Props> = ({
       }
 
       await apiAuthenticated.delete(`posts/delete/${postId}`)
-      await getPostsAfterDelete()
+      if (getPostsAfterDelete) {
+        await getPostsAfterDelete()
+      }
 
       setLoading(false)
 

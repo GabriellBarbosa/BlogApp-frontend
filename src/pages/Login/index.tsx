@@ -7,7 +7,7 @@ import {
   RecoverPassword,
   Register
 } from './styles'
-import { Input } from '@components/Input'
+import { Input } from '@components/Fields/Input'
 import { Link, useNavigate } from 'react-router-dom'
 import { FormHandles } from '@unform/core'
 import { Button } from '@components/Button'

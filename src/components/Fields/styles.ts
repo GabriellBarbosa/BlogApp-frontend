@@ -37,6 +37,10 @@ export const TextareaStyled = styled.textarea`
   resize: none;
 `
 
+export const InputStyled = styled.input`
+  ${Field}
+`
+
 export const HelperText = styled.span`
   padding: 0 4px;
   font-size: 12px;

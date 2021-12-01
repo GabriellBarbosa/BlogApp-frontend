@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Container } from './styles'
-import { PostProps } from 'src/interfaces/post'
-import { EditModal } from './EditModal'
-import { DeleteModal } from './DeleteModal'
-import { Post } from './Post'
+import { Container, Wrapper } from './styles'
+import { PostProps } from '@interfaces/post'
+import { EditModal } from '../Modal/EditModal'
+import { DeleteModal } from '../Modal/DeleteModal'
+import { Post } from '../Post'
 
 interface Props {
   posts: PostProps[]
@@ -69,16 +69,17 @@ export const Posts: React.FC<Props> = ({ posts, setPosts, getPosts }) => {
         {posts &&
           posts.map(
             ({ _id, author, content, category, updatedAt, createdAt }) => (
-              <Post
-                key={_id}
-                id={_id}
-                author={author}
-                content={content}
-                category={category}
-                updatedAt={updatedAt}
-                createdAt={createdAt}
-                openModal={openModal}
-              />
+              <Wrapper key={_id}>
+                <Post
+                  id={_id}
+                  author={author}
+                  content={content}
+                  category={category}
+                  updatedAt={updatedAt}
+                  createdAt={createdAt}
+                  openModal={openModal}
+                />
+              </Wrapper>
             )
           )}
       </Container>

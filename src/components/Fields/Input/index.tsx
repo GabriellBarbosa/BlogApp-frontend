@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes, useEffect, useRef } from 'react'
-import { Container, Label, InputStyled, HelperText } from './styles'
+import { Container, Label, InputStyled, HelperText } from '../styles'
 import { useField } from '@unform/core'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {

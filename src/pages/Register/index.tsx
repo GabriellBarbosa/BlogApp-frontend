@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Container, Title, FormStyled, FieldsWrapper, Login } from './styles'
-import { Input } from '@components/Input'
+import { Input } from '@components/Fields/Input'
 import { FormHandles } from '@unform/core'
 import { Button } from '@components/Button'
 import { api } from '@services/api'

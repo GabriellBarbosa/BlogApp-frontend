@@ -16,7 +16,7 @@ interface Props {
   postId: string
   open: boolean
   handleClose: () => void
-  setPosts: React.Dispatch<React.SetStateAction<PostProps[]>>
+  setPosts?: React.Dispatch<React.SetStateAction<PostProps[]>>
 }
 
 interface FormProps {
@@ -30,16 +30,18 @@ export const EditModal: React.FC<Props> = ({
   postId,
   setPosts
 }) => {
+  const formRef = useRef<FormHandles>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [categories, setCategories] = useState<CategoryProps[]>([])
-  const formRef = useRef<FormHandles>(null)
   const { addAlert } = useSnackbar()
   const { validateBeforeSubmit } = useErrors()
 
   const getPostsAfterEdit = async () => {
     try {
       const { data } = await api.get('posts')
-      setPosts(data)
+      if (setPosts) {
+        setPosts(data)
+      }
     } catch {
       if (addAlert) {
         addAlert({
@@ -97,7 +99,14 @@ export const EditModal: React.FC<Props> = ({
     try {
       const { data } = await api.get(`posts/${postId}`)
       Object.entries(data).forEach(([key, value]) => {
-        formRef.current?.setFieldValue(key, value)
+        if (key === 'content' || key === 'category') {
+          if (key === 'category') {
+            const category = value as CategoryProps
+            formRef.current?.setFieldValue(key, category._id)
+            return
+          }
+          formRef.current?.setFieldValue(key, value)
+        }
       })
     } catch {
       if (addAlert) {
