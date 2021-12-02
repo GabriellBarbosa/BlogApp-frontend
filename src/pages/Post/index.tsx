@@ -1,5 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Container, Comments } from './styles'
+import {
+  Container,
+  Comments,
+  CommentWrapper,
+  FirstCommentCall,
+  FormStyled
+} from './styles'
 import { Post as PostComponent } from '@components/Post'
 import { useLocation } from 'react-router'
 import { api, authenticatedRequest } from '@services/api'
@@ -8,7 +14,6 @@ import { EditModal } from '@components/Modal/EditModal'
 import { DeleteModal } from '@components/Modal/DeleteModal'
 import { CommentProps } from '@interfaces/comment'
 import { Textarea } from '@components/Fields/Textarea'
-import { Form } from '@unform/web'
 import { FormHandles } from '@unform/core'
 import { Button } from '@components/Button'
 import { useErrors } from '@hooks/useErrors'
@@ -101,6 +106,7 @@ export const Post: React.FC = () => {
       await api.post(`comments/add/${post?._id}`, data)
       getComments()
 
+      formRef.current?.reset()
       setLoading(false)
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -142,18 +148,18 @@ export const Post: React.FC = () => {
         <>
           {comments.length ? (
             comments.map(props => (
-              <div key={props.post}>
+              <CommentWrapper key={props.post}>
                 <Comment {...props} />
-              </div>
+              </CommentWrapper>
             ))
           ) : (
-            <p>Seja o primeiro a comentar</p>
+            <FirstCommentCall>Seja o primeiro a comentar</FirstCommentCall>
           )}
         </>
-        <Form ref={formRef} onSubmit={handleSubmit}>
+        <FormStyled ref={formRef} onSubmit={handleSubmit}>
           <Textarea name="comment" placeholder="adicione um comentário" />
           <Button loading={loading}>Comentar</Button>
-        </Form>
+        </FormStyled>
       </Comments>
     </Container>
   )
